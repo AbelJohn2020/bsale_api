@@ -59,5 +59,15 @@ router.put('/:book_id', (req, res) => {
     });
 });
 
+router.delete('/:book_id', (req, res) => {
+    const { book_id } = req.params;
+    mysqlConnection.query('DELETE FROM books WHERE book_id = ?', [book_id], (error, rows, fields) => {
+        if(!error) {
+            res.json({Status: 'Book deleted'});
+        } else {
+            console.log(error);
+        }
+    });
+});
 
 module.exports = router;
