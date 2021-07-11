@@ -45,4 +45,19 @@ router.post('/', (req, res) => {
     });
 });
 
+router.put('/:book_id', (req, res) => {
+    const { book_name, url_image, book_price, book_discount, category_id } = req.body;
+    const { book_id } = req.params;
+    const query = 'CALL addBookOrEdit(?, ?, ?, ?, ?, ?)';
+
+    mysqlConnection.query(query, [ book_id, book_name, url_image, book_price, book_discount, category_id], (error, rows, fields) => {
+        if(!error) {
+            res.json({Status: 'Book updated'});
+        } else {
+            console.log(error);
+        }
+    });
+});
+
+
 module.exports = router;
